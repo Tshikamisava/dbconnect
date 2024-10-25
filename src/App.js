@@ -7,6 +7,7 @@ import theme from './theme';
 import RegistrationForm from './components/RegistrationForm';
 import CreditScoreQuiz from './components/CreditScoreQuiz';
 import LoanOptionsPage from './pages/LoanOptionsPage';
+import MarketplaceListing from './components/MarketplaceListing';
 
 function App() {
   const [isRegistered, setIsRegistered] = useState(false);
@@ -26,7 +27,7 @@ function App() {
           />
           <Route
             path="/quiz"
-            element={isRegistered ? <CreditScoreQuiz /> : <Navigate to="/" />}
+            element={isRegistered ? <MarketplaceListing /> : <Navigate to="/" />}
           />
           <Route
             path="/loan-options"
