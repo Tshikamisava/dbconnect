@@ -7,7 +7,7 @@ import theme from './theme';
 import RegistrationForm from './components/RegistrationForm';
 import CreditScoreQuiz from './components/CreditScoreQuiz';
 import LoanOptionsPage from './pages/LoanOptionsPage';
-import MarketplaceListing from './components/MarketplaceListing';
+import Home from './components/Home';
 
 function App() {
   const [isRegistered, setIsRegistered] = useState(false);
@@ -23,6 +23,10 @@ function App() {
         <Routes>
           <Route
             path="/"
+            element={!isRegistered ? <Home onRegister={handleRegistration} /> : <Navigate to="/quiz" />}
+          />
+          <Route
+            path="/register"
             element={!isRegistered ? <RegistrationForm onRegister={handleRegistration} /> : <Navigate to="/quiz" />}
           />
           <Route
