@@ -1,73 +1,107 @@
-import Image from "next/image"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+// MarketplaceListing.js
+import React, { useState } from 'react';
+import { Card, CardContent, CardActions, CardHeader, Typography, Button, Container, Grid } from "@mui/material";
+import AddListingForm from './AddListingForm';
+import ContactSellerModal from './ContactSellerModal';
 
-interface Product {
-  id: number
-  title: string
-  price: number
-  description: string
-  image: string
-}
-
-const products: Product[] = [
+const initialProducts = [
   {
     id: 1,
     title: "Handcrafted Wooden Chair",
     price: 199.99,
     description: "Beautifully crafted wooden chair, perfect for any home or office.",
-    image: "/placeholder.svg?height=200&width=200"
+    image: "/images/placeholder.svg"
   },
-  {
-    id: 2,
-    title: "Organic Honey",
-    price: 12.99,
-    description: "100% pure, locally sourced organic honey. Delicious and healthy!",
-    image: "/placeholder.svg?height=200&width=200"
-  },
-  {
-    id: 3,
-    title: "Handmade Leather Wallet",
-    price: 49.99,
-    description: "Genuine leather wallet, handcrafted with care. Stylish and durable.",
-    image: "/placeholder.svg?height=200&width=200"
-  },
-  {
-    id: 4,
-    title: "Artisanal Cheese Selection",
-    price: 29.99,
-    description: "A curated selection of locally produced artisanal cheeses.",
-    image: "/placeholder.svg?height=200&width=200"
-  }
-]
+  // other products...
+];
 
 export default function MarketplaceListing() {
+  const [products, setProducts] = useState(initialProducts);
+  const [isAdding, setIsAdding] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleAddProduct = (newProduct) => {
+    setProducts((prevProducts) => [...prevProducts, newProduct]);
+  };
+
+  const openContactModal = (product) => {
+    setSelectedProduct(product);
+    setContactModalOpen(true);
+  };
+
+  const closeContactModal = () => {
+    setContactModalOpen(false);
+    setSelectedProduct(null);
+  };
+
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-8 text-center">SME Marketplace</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((product) => (
-          <Card key={product.id} className="flex flex-col">
-            <CardHeader>
-              <Image
-                src={product.image}
-                alt={product.title}
-                width={200}
-                height={200}
-                className="w-full h-48 object-cover rounded-t-lg"
-              />
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <CardTitle className="mb-2">{product.title}</CardTitle>
-              <p className="text-2xl font-bold text-primary mb-2">${product.price.toFixed(2)}</p>
-              <p className="text-muted-foreground">{product.description}</p>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full">Contact Seller</Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
-    </div>
-  )
+    <Container maxWidth="lg" sx={{ py: 8 }}>
+      <Typography variant="h3" component="h1" align="center" gutterBottom>
+        SME Marketplace
+      </Typography>
+
+      {isAdding ? (
+        <AddListingForm
+          onAddProduct={handleAddProduct}
+          onClose={() => setIsAdding(false)}
+        />
+      ) : (
+        <>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setIsAdding(true)}
+            sx={{ marginBottom: '2rem' }}
+          >
+            Create New Listing
+          </Button>
+
+          <Grid container spacing={4}>
+            {products.map((product) => (
+              <Grid item key={product.id} xs={12} sm={6} md={4}>
+                <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <CardHeader
+                    title={product.title}
+                    subheader={`$${product.price.toFixed(2)}`}
+                    sx={{ textAlign: 'center' }}
+                  />
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    width="100%"
+                    height="auto"
+                    style={{ objectFit: 'cover', borderRadius: '4px' }}
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography variant="body2" color="textSecondary">
+                      {product.description}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      onClick={() => openContactModal(product)}
+                    >
+                      Contact Seller
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </>
+      )}
+
+      {selectedProduct && (
+        <ContactSellerModal
+          open={contactModalOpen}
+          onClose={closeContactModal}
+          product={selectedProduct}
+        />
+      )}
+    </Container>
+  );
 }
