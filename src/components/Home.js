@@ -26,6 +26,10 @@ export default function CreditScoreLanding() {
                     <Link className="text-sm font-medium hover:underline underline-offset-4" href="LenderSignup">
                         LenderSignUp
                     </Link>
+                    <Link className="text-sm font-medium hover:underline underline-offset-4" href="BizSIgnUp">
+                        BizSIgnUp
+                    </Link>
+                    
                 </nav>
             </header>
             <main className="flex-1">

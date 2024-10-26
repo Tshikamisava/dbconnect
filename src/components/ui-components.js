@@ -29,7 +29,18 @@ export const Button = ({
         </button>
     );
 };
-
+// Textarea
+export const Textarea = forwardRef(({ className = "", rows = 4, ...props }, ref) => {
+    return (
+        <textarea
+            ref={ref}
+            rows={rows}
+            className={`w-full rounded-md border border-input bg-background p-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+            {...props}
+        />
+    );
+});
+Textarea.displayName = "Textarea";
 // Card Components
 export const Card = ({ className = "", children, ...props }) => {
     return (
