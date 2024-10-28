@@ -7,7 +7,10 @@ import RegistrationForm from './components/RegistrationForm';
 import CreditScoreQuiz from './components/CreditScoreQuiz';
 import LoanOptionsPage from './pages/LoanOptionsPage';
 import Home from './components/Home';
+
 import MarketplaceListing from './components/MarketplaceListing';
+import LenderSignupForm from './components/LenderSignUp';
+import BizSIgnUpForm from './components/BizSIgnUp';
 
 function App() {
   // State to track if the user has completed registration
@@ -36,6 +39,16 @@ function App() {
           />
           
           {/* Quiz Route: Accessible only after registration */}
+          <Route
+            path="/LenderSignup"
+            element={!isRegistered ? <LenderSignupForm /> : <Navigate to="/LenderSignup" />}
+          />
+          <Route
+            path="/BizSIgnUp"
+            element={!isRegistered ? <BizSIgnUpForm /> : <Navigate to="/BizSIgnUp" />}
+          />
+          
+          
           <Route
             path="/quiz"
             element={isRegistered ? <CreditScoreQuiz /> : <Navigate to="/" />}
