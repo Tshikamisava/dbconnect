@@ -6,7 +6,7 @@ export default function CreditScoreLanding() {
     return (
         <div className="flex flex-col min-h-screen">
             <header className="px-4 lg:px-6 h-14 flex items-center">
-                <Link className="flex items-center justify-center" href="#">
+                <Link className="flex items-center justify-center" href="/">
                     <DollarSign className="h-6 w-6" />
                     <span className="sr-only">CreditConnect</span>
                 </Link>
@@ -23,6 +23,13 @@ export default function CreditScoreLanding() {
                     <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
                         Contact
                     </Link>
+                    <Link className="text-sm font-medium hover:underline underline-offset-4" href="LenderSignup">
+                        LenderSignUp
+                    </Link>
+                    <Link className="text-sm font-medium hover:underline underline-offset-4" href="BizSIgnUp">
+                        BizSIgnUp
+                    </Link>
+                    
                 </nav>
             </header>
             <main className="flex-1">

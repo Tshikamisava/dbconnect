@@ -8,6 +8,8 @@ import RegistrationForm from './components/RegistrationForm';
 import CreditScoreQuiz from './components/CreditScoreQuiz';
 import LoanOptionsPage from './pages/LoanOptionsPage';
 import Home from './components/Home';
+import LenderSignupForm from './components/LenderSignUp';
+import BizSIgnUpForm from './components/BizSIgnUp';
 
 function App() {
   const [isRegistered, setIsRegistered] = useState(false);
@@ -29,6 +31,16 @@ function App() {
             path="/register"
             element={!isRegistered ? <RegistrationForm onRegister={handleRegistration} /> : <Navigate to="/quiz" />}
           />
+          <Route
+            path="/LenderSignup"
+            element={!isRegistered ? <LenderSignupForm /> : <Navigate to="/LenderSignup" />}
+          />
+          <Route
+            path="/BizSIgnUp"
+            element={!isRegistered ? <BizSIgnUpForm /> : <Navigate to="/BizSIgnUp" />}
+          />
+          
+          
           <Route
             path="/quiz"
             element={isRegistered ? <CreditScoreQuiz /> : <Navigate to="/" />}
