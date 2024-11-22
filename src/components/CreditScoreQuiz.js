@@ -1,48 +1,69 @@
-import React, { useState } from 'react';
-import { Box, Typography, RadioGroup, FormControlLabel, Radio, Button } from '@mui/material';
+import React, { useState } from "react";
 
 const CreditScoreQuiz = () => {
-  const [score, setScore] = useState(null);
+  const questions = [
+    {
+      questionText: "What is considered a good credit score?",
+      answerOptions: [
+        { answerText: "300-500", isCorrect: false },
+        { answerText: "500-700", isCorrect: false },
+        { answerText: "700-850", isCorrect: true },
+        { answerText: "850-1000", isCorrect: false },
+      ],
+    },
+    {
+      questionText: "Which factor affects your credit score the most?",
+      answerOptions: [
+        { answerText: "Credit Utilization", isCorrect: true },
+        { answerText: "Income", isCorrect: false },
+        { answerText: "Gender", isCorrect: false },
+        { answerText: "Marital Status", isCorrect: false },
+      ],
+    },
+    // Add more questions as needed
+  ];
 
-  const handleQuizSubmit = () => {
-    // Replace with actual scoring logic
-    const calculatedScore = Math.floor(Math.random() * 100); // Example score calculation
-    setScore(calculatedScore);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showScore, setShowScore] = useState(false);
+
+  const handleAnswerButtonClick = (isCorrect) => {
+    if (isCorrect) {
+      setScore(score + 1);
+    }
+
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion < questions.length) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      setShowScore(true);
+    }
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        maxWidth: 500,
-        mx: 'auto',
-        my: 5,
-        p: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        backgroundColor: 'white'
-      }}
-    >
-      <Typography variant="h5" gutterBottom>
-        Credit Score Quiz
-      </Typography>
-      <RadioGroup>
-        <FormControlLabel control={<Radio />} label="Question 1: Yes" />
-        <FormControlLabel control={<Radio />} label="Question 1: No" />
-        <FormControlLabel control={<Radio />} label="Question 2: Yes" />
-        <FormControlLabel control={<Radio />} label="Question 2: No" />
-      </RadioGroup>
-      <Button variant="contained" color="primary" onClick={handleQuizSubmit} sx={{ mt: 3 }}>
-        Submit Quiz
-      </Button>
-      {score !== null && (
-        <Typography variant="h6" sx={{ mt: 3 }}>
-          Your Credit Score: {score}
-        </Typography>
+    <div className="quiz-container">
+      {showScore ? (
+        <div className="score-section">
+          You scored {score} out of {questions.length}
+        </div>
+      ) : (
+        <div className="question-section">
+          <div className="question-count">
+            <span>Question {currentQuestion + 1}</span>/{questions.length}
+          </div>
+          <div className="question-text">
+            {questions[currentQuestion].questionText}
+          </div>
+          <div className="answer-section">
+            {questions[currentQuestion].answerOptions.map((answerOption, index) => (
+              <button key={index} onClick={() => handleAnswerButtonClick(answerOption.isCorrect)}>
+                {answerOption.answerText}
+              </button>
+            ))}
+          </div>
+        </div>
       )}
-    </Box>
+    </div>
   );
 };
 
